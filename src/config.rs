@@ -60,12 +60,13 @@ fn get_bool(key: &str) -> Result<bool, String> {
         _ => Err(format!("Valor inválido para {key}: {raw}")),
     }
 }
-
+/// Inicializa el struct Config desde dotenv y lo guarda en memoria.
+/// Importante:: hay que llamar a esto primero antes de usarlo
 pub fn init_config() -> &'static RwLock<Config> {
     CONFIG.get_or_init(|| RwLock::new(Config::load().expect("Error cargando configuración")))
 }
 
-/// devuelve un guard de solo lectura
+/// Devuelve un guard con el objeto config (del fichero .env) de solo lectura.
 pub fn config() -> std::sync::RwLockReadGuard<'static, Config> {
     CONFIG
         .get()
